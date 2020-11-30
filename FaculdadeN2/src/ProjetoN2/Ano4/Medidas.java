@@ -61,6 +61,7 @@ public class Medidas extends javax.swing.JFrame {
         btStart = new javax.swing.JButton();
         btReset = new javax.swing.JButton();
         btSubmit = new javax.swing.JButton();
+        lblTempo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -200,11 +201,17 @@ public class Medidas extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btSubmit)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(244, 244, 244)
+                .addComponent(lblTempo, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(82, 82, 82)
+                .addGap(28, 28, 28)
+                .addComponent(lblTempo)
+                .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -228,7 +235,7 @@ public class Medidas extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btStart)
                             .addComponent(btSubmit))
-                        .addGap(0, 41, Short.MAX_VALUE)))
+                        .addGap(0, 55, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -251,6 +258,20 @@ public class Medidas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btStartActionPerformed
+
+        new Thread() {
+        int counter = 30;
+        public void run() {
+            while(counter >= 0) {
+                lblTempo.setText("TEMPO: " + (counter--));
+                try{
+                    Thread.sleep(1000);
+                } catch(Exception e) {}
+            }
+            JOptionPane.showMessageDialog(null, "TEMPO ESGOTADO");
+        }
+        }.start();
+        
         lbTmp.setText(String.valueOf(Calculo.tmpRand()));
         setTerm1(lbTmp.getText());
         btStart.setVisible(false);
@@ -325,5 +346,6 @@ public class Medidas extends javax.swing.JFrame {
     private javax.swing.JLabel lbTmp2;
     private javax.swing.JLabel lbl1;
     private javax.swing.JLabel lbl2;
+    private javax.swing.JLabel lblTempo;
     // End of variables declaration//GEN-END:variables
 }
