@@ -5,6 +5,7 @@
  */
 package ProjetoN2.Ano5.Quiz;
 
+import ProjetoN2.Ano5.MenuAno5;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,23 +13,27 @@ import javax.swing.JOptionPane;
  * @author Jonathan Dias
  */
 public class Q4 extends javax.swing.JFrame {
-
-    /**
-     * Creates new form Q1
-     */
+    boolean parar = true;
+    int counter = 10;
     public Q4() {
         initComponents();
         
+        parar = true;
         new Thread() {
-        public void run() {
-            while(Contador.contadorTempo >= 0) {
-                lblTempo.setText("TEMPO: " + (Contador.contadorTempo--));
-                try{
-                    Thread.sleep(1000);
-                } catch(Exception e) {}
+        
+            public void run() {
+                while(counter >= 0 && parar) {
+                    lblTempo.setText("TEMPO: " + (counter--));
+                    try{
+                        Thread.sleep(1000);
+                    } catch(Exception e) {}
+                    if(counter == 0) {
+                        JOptionPane.showMessageDialog(null, "TEMPO ESGOTADO"); 
+                        new Q5().setVisible(true);
+                        dispose();
+                    }
+                } 
             }
-            JOptionPane.showMessageDialog(null, "TEMPO ESGOTADO");
-        }
         }.start();
     }
 
@@ -145,7 +150,9 @@ public class Q4 extends javax.swing.JFrame {
     }//GEN-LAST:event_a2ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        System.exit(0);
+        parar = false;     
+        new MenuAno5().setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -157,6 +164,7 @@ public class Q4 extends javax.swing.JFrame {
             new Q5().setVisible(true);
             dispose();
         }
+        parar = false;
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

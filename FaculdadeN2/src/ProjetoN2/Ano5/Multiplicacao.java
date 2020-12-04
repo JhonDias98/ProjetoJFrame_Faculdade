@@ -14,7 +14,8 @@ import javax.swing.JOptionPane;
  * @author Jonathan Dias
  */
 public class Multiplicacao extends javax.swing.JFrame {
-
+    boolean parar = true;
+    int counter = 60;
     /**
      * Creates new form Multiplicação
      */
@@ -353,10 +354,13 @@ public class Multiplicacao extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton4)
-                        .addGap(67, 67, 67)
-                        .addComponent(btStart, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton4)
+                                .addGap(151, 151, 151))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btStart, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                         .addComponent(btSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(110, 110, 110)
                         .addComponent(btReset))
@@ -395,22 +399,26 @@ public class Multiplicacao extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        new MenuAno4().setVisible(true);
+        parar = false;
+        new MenuAno5().setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void btStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btStartActionPerformed
 
+        parar = true;
         new Thread() {
-        int counter = 120;
+        
         public void run() {
-            while(counter >= 0) {
+            while(counter >= 0 && parar) {
                 lblTempo.setText("TEMPO: " + (counter--));
                 try{
                     Thread.sleep(1000);
                 } catch(Exception e) {}
-            }
-            JOptionPane.showMessageDialog(null, "TEMPO ESGOTADO");
+                if(counter == 0) {
+                    JOptionPane.showMessageDialog(null, "TEMPO ESGOTADO");
+                }
+            }    
         }
         }.start();
         
@@ -478,6 +486,10 @@ public class Multiplicacao extends javax.swing.JFrame {
         
         btStart.setVisible(true);
         btSubmit.setVisible(false);
+        
+        parar = false;
+        counter = 60;
+        lblTempo.setText("TEMPO: " + (counter));
     }//GEN-LAST:event_btResetActionPerformed
 
     /**

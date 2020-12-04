@@ -13,7 +13,8 @@ import javax.swing.JOptionPane;
  * @author Jonathan Dias
  */
 public class Multiplicacao extends javax.swing.JFrame {
-
+    boolean parar = true;
+    int counter = 60;
     /**
      * Creates new form Multiplicação
      */
@@ -329,22 +330,26 @@ public class Multiplicacao extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        parar = false;
         new MenuAno4().setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void btStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btStartActionPerformed
 
+        parar = true;
         new Thread() {
-        int counter = 60;
+        
         public void run() {
-            while(counter >= 0) {
+            while(counter >= 0 && parar) {
                 lblTempo.setText("TEMPO: " + (counter--));
                 try{
                     Thread.sleep(1000);
                 } catch(Exception e) {}
-            }
-            JOptionPane.showMessageDialog(null, "TEMPO ESGOTADO");
+                if(counter == 0) {
+                    JOptionPane.showMessageDialog(null, "TEMPO ESGOTADO");
+                }
+            }    
         }
         }.start();
         
@@ -403,6 +408,10 @@ public class Multiplicacao extends javax.swing.JFrame {
         
         btStart.setVisible(true);
         btSubmit.setVisible(false);
+        
+        parar = false;
+        counter = 60;
+        lblTempo.setText("TEMPO: " + (counter));
     }//GEN-LAST:event_btResetActionPerformed
 
     /**

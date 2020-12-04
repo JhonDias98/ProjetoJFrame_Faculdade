@@ -13,7 +13,8 @@ import javax.swing.JOptionPane;
  * @author Jonathan Dias
  */
 public class Medidas extends javax.swing.JFrame {
-
+    boolean parar = true;
+    int counter = 30;
     /**
      * Creates new form Medidas
      */
@@ -243,6 +244,7 @@ public class Medidas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        parar = false;
         new MenuAno4().setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -259,16 +261,19 @@ public class Medidas extends javax.swing.JFrame {
 
     private void btStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btStartActionPerformed
 
+        parar = true;
         new Thread() {
-        int counter = 30;
+        
         public void run() {
-            while(counter >= 0) {
+            while(counter >= 0 && parar) {
                 lblTempo.setText("TEMPO: " + (counter--));
                 try{
                     Thread.sleep(1000);
                 } catch(Exception e) {}
-            }
-            JOptionPane.showMessageDialog(null, "TEMPO ESGOTADO");
+                if(counter == 0) {
+                    JOptionPane.showMessageDialog(null, "TEMPO ESGOTADO");
+                }
+            }    
         }
         }.start();
         
@@ -281,6 +286,7 @@ public class Medidas extends javax.swing.JFrame {
     private void btSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSubmitActionPerformed
         if (lbTmp.getText().equals(lbTmp2.getText())) {
             JOptionPane.showMessageDialog(null, "Parabéns, \nAs Medidas estão corretas!!");        
+            parar = false;
         }
         else {
             JOptionPane.showMessageDialog(null, "Não foi dessa vez, \nTente novamente!!");
@@ -294,6 +300,10 @@ public class Medidas extends javax.swing.JFrame {
         lbl2.setIcon(null);
         btSubmit.setVisible(false);
         btStart.setVisible(true); 
+        
+        parar = false;
+        counter = 30;
+        lblTempo.setText("TEMPO: " + (counter));
     }//GEN-LAST:event_btResetActionPerformed
 
     /**
